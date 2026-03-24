@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fantasias Infantis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --rosa:#e75480;
+  --rosa-escuro:#e75480;
+}
+
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:#fff;
+}
+
+/* HEADER */
+header{
+  background: linear-gradient(135deg,#76c7e0,#fff);
+  padding:15px;
+  text-align:center;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.logo{
+  height:60px;
+}
+
+/* BARRA (BUSCA + FILTRO) */
+.top-bar{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:25px 0;
+}
+
+/* BUSCA COM LUPA */
+.busca-box{
+  position:relative;
+}
+
+.busca-box input{
+  padding:10px 15px 10px 40px;
+  border-radius:25px;
+  border:1px solid #ccc;
+  outline:none;
+}
+
+/* ÍCONE */
+.busca-box svg{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  fill:#e75480;
+}
+
+/* BOTÕES */
+.top-bar button{
+  padding:10px 18px;
+  border:none;
+  border-radius:25px;
+  background:#eee;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.top-bar button.active{
+  background:var(--rosa);
+  color:#fff;
+}
+
+/* GRID */
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  border-radius:25px;
+  overflow:hidden;
+  box-shadow:0 15px 35px rgba(0,0,0,.1);
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+}
+
+.card img{
+  width:100%;
+  height:300px;
+  object-fit:cover;
+}
+
+/* INFO */
+.info{
+  padding:15px;
+  text-align:center;
+}
+
+.preco{
+  color:var(--rosa-escuro);
+  font-weight:600;
+  font-size:1.2rem;
+}
+
+/* BOTÃO */
+.btn{
+  display:inline-block;
+  margin-top:10px;
+  padding:12px 25px;
+  background:var(--rosa);
+  color:#fff;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:600;
+  transition:all 0.3s ease;
+}
+
+.btn:hover{
+  transform:scale(1.08);
+  background:var(--rosa-escuro);}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div style="position:relative; display:flex; align-items:center; justify-content:center;">
+
+    <!-- BOTÃO HOME -->
+    <a href="index.html" style="
+      position:absolute;
+      left:15px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      text-decoration:none;
+      color:#fff;
+      font-weight:600;
+    ">
+      <svg width="20" height="20" fill="#fff" viewBox="0 0 24 24">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+      Home
+    </a>
+
+    <!-- LOGO -->
+    <a href="index.html">
+      <img src="Mundo Encantado.PNG" class="logo">
+    </a>
+
+  </div>
+</header>
+
+<!-- BUSCA + FILTRO -->
+<div class="top-bar">
+
+  <div class="busca-box">
+    <svg viewBox="0 0 24 24">
+      <path d="M10 2a8 8 0 105.29 14.29l4.7 4.7 1.41-1.41-4.7-4.7A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>
+    </svg>
+    <input type="text" id="busca" placeholder="O que você está buscando?" onkeyup="buscar()">
+  </div>
+
+  <button onclick="filtrar('todos')" class="active">Todos</button>
+  <button onclick="filtrar('menina')">Menina</button>
+  <button onclick="filtrar('menino')">Menino</button>
+
+</div>
+
+<div class="container">
+  <div class="grid" id="produtos"></div>
+</div>
+
+<script>
+const produtos = [
+{
+    nome: "Fantasia Branca de Neve",
+    preco: "159,90",
+    imagem: "https://dcdn-us.mitiendanube.com/stores/006/769/033/products/branca-de-neve-gemini_generated_image_-4e1530827ef38c488c17676228393663-1024-1024.webp",
+    categoria: "menina"
+  },
+  {
+    nome: "FANTASIA ZOEY Guerreiras do k-pop",
+    preco: "154,00",
+    imagem: "https://dcdn-us.mitiendanube.com/stores/006/769/033/products/zoey-site-717e9c7d198c2c6b8d17676202159498-1024-1024.webp",
+    categoria: "menina"
+  },
+  {
+    nome: "FANTASIA RUMI GOLDEN",
+    preco: "159,90",
+    imagem: "https://dcdn-us.mitiendanube.com/stores/006/769/033/products/rumi-goldem-site-2-2fd2de43d45923081017676201255715-1024-1024.webp",
+    categoria: "menina"
+  },
+  {
+    nome: "FANTASIA MIRA Guerreiras do k-pop",
+    preco: "154,90",
+    imagem: "https://dcdn-us.mitiendanube.com/stores/006/769/033/products/mira-site-1-26ef3a71bb033b5d5017676205485200-1024-1024.webp",
+    categoria: "menina"
+  },
+  {
+    nome: "Fantasia Rumi Convencional",
+    preco: "154,90",
+    imagem: "https://dcdn-us.mitiendanube.com/stores/006/769/033/products/rumi-m-site-1-15f07fe8623b8ed80817666060976052-1024-1024.webp",
+    categoria: "menina"
+  },
+  {
+    nome: "Fantasia Ben 10",
+    preco: "59,90",
+    imagem: "https://dcdn-us.mitiendanube.com/stores/006/769/033/products/ben-10-conjunto-0ea774d7989297421d17683979021598-1024-1024.webp",
+    categoria: "menino"
+  },
+  {
+    nome: "Fantasia Capitão América",
+    preco: "59,90",
+    imagem: "https://dcdn-us.mitiendanube.com/stores/006/769/033/products/capitao-america-5018521f3bad79898217683980632442-1024-1024.webp",
+    categoria: "menino"
+  },
+  {
+    nome: "Fantasia Batman",
+    preco: "59,90",
+    imagem: "https://dcdn-us.mitiendanube.com/stores/006/769/033/products/batman-curto-4baaf36619acd542dc17683975925155-1024-1024.webp",
+    categoria: "menino"
+  }
+];
+
+const container = document.getElementById("produtos");
+
+function mostrar(lista){
+  container.innerHTML = "";
+
+  lista.forEach(p => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${p.imagem}">
+        <div class="info">
+          <h3>${p.nome}</h3>
+          <div class="preco">R$ ${p.preco}</div>
+          <a class="btn" href="https://wa.me/5548984475129?text=Olá! Quero a fantasia: ${p.nome}">
+            Solicitar pedido
+          </a>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function filtrar(cat){
+  document.querySelectorAll(".top-bar button").forEach(b => b.classList.remove("active"));
+  event.target.classList.add("active");
+
+  if(cat === "todos"){
+    mostrar(produtos);
+  } else {
+    mostrar(produtos.filter(p => p.categoria === cat));
+  }
+}
+
+function buscar(){
+  const termo = document.getElementById("busca").value.toLowerCase();
+
+  const filtrados = produtos.filter(p =>
+    p.nome.toLowerCase().includes(termo)
+  );
+
+  mostrar(filtrados);
+}
+
+mostrar(produtos);
+</script>
+
+</body>
+</html>
